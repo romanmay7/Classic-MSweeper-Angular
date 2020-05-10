@@ -25,7 +25,7 @@ export class GameScreenComponent implements OnInit {
 
       gameField: Cell[][];
 
-      bobmsAmount:number=30;
+      bobmsAmount:number=50;
 
   constructor() { }
 
@@ -92,7 +92,7 @@ export class GameScreenComponent implements OnInit {
          x=Math.floor(Math.random() * this.N); 
          y=Math.floor(Math.random() * this.M);
       }
-
+      //console.log("X:"+x+" Y:"+y)
       this.gameField[x][y].value=10;
       
     }
@@ -202,32 +202,45 @@ export class GameScreenComponent implements OnInit {
 
             this.ctx.fillStyle = 'red';
             //console.log("Drawing bomb at:"+m+","+m);
-            this.ctx.fillRect((m)*this.Scale, (n)*this.Scale,this.Scale-2, this.Scale-2) 
+            this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
             break;  
            
          } 
-         case 1: { 
+          case 1: { 
             //Draw Cell with Number "1" Label
             this.ctx.fillStyle = 'blue';
             this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (m)*this.Scale+8, (n)*this.Scale+21);
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
             break; 
-         } 
-         case 2: { 
-          //Draw Cell with Number "2" Label
-          this.ctx.fillStyle = 'green';
-          this.ctx.font = "20px Arial";
-          this.ctx.fillText(""+this.gameField[n][m].value, (m)*this.Scale+8, (n)*this.Scale+21);
-          break; 
-       }
-       case 3: { 
-        //Draw Cell with Number "3" Label
-        this.ctx.fillStyle = 'red';
-        this.ctx.font = "20px Arial";
-        this.ctx.fillText(""+this.gameField[n][m].value, (m)*this.Scale+8, (n)*this.Scale+21);
-        break; 
-     } 
-
+          } 
+          case 2: { 
+            //Draw Cell with Number "2" Label
+            this.ctx.fillStyle = 'green';
+            this.ctx.font = "20px Arial";
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+           break; 
+          }
+          case 3: { 
+            //Draw Cell with Number "3" Label
+            this.ctx.fillStyle = 'red';
+            this.ctx.font = "20px Arial";
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+            break;       
+          } 
+          case 4: { 
+            //Draw Cell with Number "4" Label
+             this.ctx.fillStyle = 'violet';
+             this.ctx.font = "20px Arial";
+             this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+             break;       
+          } 
+          case 5: { 
+             //Draw Cell with Number "5" Label
+             this.ctx.fillStyle = 'maroon';
+             this.ctx.font = "20px Arial";
+             this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+             break;       
+          } 
          }
           
       }
