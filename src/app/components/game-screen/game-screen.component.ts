@@ -24,8 +24,8 @@ export class GameScreenComponent implements OnInit {
       fieldHeight:number;
 
       gameField: Cell[][];
-
       bobmsAmount:number=50;
+      fieldVisible:boolean=true
 
   constructor() { }
 
@@ -47,7 +47,7 @@ export class GameScreenComponent implements OnInit {
     //as its drawing context:
     this.ctx = this.canvas.nativeElement.getContext('2d');
     
-    this.ctx.fillStyle = 'grey';
+    this.ctx.fillStyle = 'lightgrey';
     this.ctx.fillRect(0, 0, this.fieldWidth, this.fieldHeight);
 
     this.drawGameFieldLines();
@@ -188,16 +188,18 @@ export class GameScreenComponent implements OnInit {
 
     for(var n=0;n<this.N;n++)
     {
-     console.log("Row Number:"+n)
-      for(var m=0;m<this.M;m++)
+     //console.log("Row Number:"+n)
+     for(var m=0;m<this.M;m++)
       {
-         let _cell=this.gameField[n][m].value
-         console.log(_cell)
+        if(this.gameField[n][m].visible)
+        {
+          let _cell=this.gameField[n][m].value
+          //console.log(_cell)
 
-         switch(_cell)
-         {
+          switch(_cell)
+          {
  
-         case 10: { 
+          case 10: { 
             //Draw Bomb;
 
             this.ctx.fillStyle = 'red';
@@ -205,7 +207,7 @@ export class GameScreenComponent implements OnInit {
             this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
             break;  
            
-         } 
+          } 
           case 1: { 
             //Draw Cell with Number "1" Label
             this.ctx.fillStyle = 'blue';
@@ -240,15 +242,90 @@ export class GameScreenComponent implements OnInit {
              this.ctx.font = "20px Arial";
              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
              break;       
+          }
+          case 6: { 
+            //Draw Cell with Number "6" Label
+            this.ctx.fillStyle = 'orange';
+            this.ctx.font = "20px Arial";
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+            break;       
+          }
+           case 7: { 
+            //Draw Cell with Number "7" Label
+            this.ctx.fillStyle = 'brown';
+            this.ctx.font = "20px Arial";
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+            break;       
+          }
+          case 8: { 
+            //Draw Cell with Number "8" Label
+            this.ctx.fillStyle = 'grey';
+            this.ctx.font = "20px Arial";
+            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+            break;       
           } 
-         }
+         }     
+        }
+         
+          else
+         {  //If Cell is UnVisible
+            //Draw Grey Rectangle;
+
+            this.ctx.fillStyle = 'grey';
+            //console.log("Drawing Unvisible Field at:"+m+","+m);
+            this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+           }
+        }
           
       }
     }
 
 
+setAllCellsVisible()
+{
+
+  for(var n=0;n<this.N;n++)
+  {
+    for(var m=0;m<this.M;m++)
+    {
+      this.gameField[n][m].visible=true
+    }
   }
 
+}
+
+setAllCellsUnVisible()
+{
+
+  for(var n=0;n<this.N;n++)
+  {
+    for(var m=0;m<this.M;m++)
+    {
+      this.gameField[n][m].visible=false
+    }
+  }
+
+}
+
+ToggleVisible()
+{
+  if(!this.fieldVisible)
+  {
+    this.fieldVisible=true;
+    this.setAllCellsVisible();
+    this.ctx.fillStyle = 'lightgrey';
+    this.ctx.fillRect(0, 0, this.fieldWidth, this.fieldHeight);
+    this.drawGameFieldLines();
+    this.drawFieldCells();
+  }
+  else
+  {
+    this.fieldVisible=false;
+    this.setAllCellsUnVisible()
+    this.drawFieldCells();
+  }
+
+}
 
 
 }
