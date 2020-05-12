@@ -1,4 +1,4 @@
-import { Component,ViewChild, ElementRef,OnInit } from '@angular/core';
+import { Component,ViewChild, ElementRef,OnInit,HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-game-screen',
@@ -28,6 +28,23 @@ export class GameScreenComponent implements OnInit {
       fieldVisible:boolean=true
 
   constructor() { }
+
+  //Listening to Mouse Click events
+  @HostListener('window:click', ['$event'])
+  clickEvent(event: MouseEvent)
+   {
+     //console.log(event);
+     //capturing coordinates
+     var positionX = event.clientX;
+     var positionY = event.clientY;
+
+     var cellX=Math.round(positionX/this.Scale)-1
+     var cellY=Math.round(positionY/this.Scale)-1
+
+     this.clickField(cellX,cellY);
+   }
+
+
 
   ngOnInit()
   {
@@ -196,6 +213,11 @@ export class GameScreenComponent implements OnInit {
           let _cell=this.gameField[n][m].value
           //console.log(_cell)
 
+          //Draw Empty Cell 
+          this.ctx.fillStyle = 'lightgrey';
+          this.ctx.font = "20px Arial";
+          this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
+                   
           switch(_cell)
           {
  
@@ -324,6 +346,51 @@ ToggleVisible()
     this.setAllCellsUnVisible()
     this.drawFieldCells();
   }
+
+}
+
+clickField(n:number,m:number)
+{
+  if(this.gameField[n][m].value!=10)
+     this.gameField[n][m].visible=true;
+
+  //If Player clicks on Bomb
+   if(this.gameField[n][m].value==10)
+   {
+    this.gameField[n][m].visible=true;
+    this.drawFieldCells();//Redraw Cells
+     alert("Game Over! X:"+(n)+",Y:"+(m));
+   }
+   else
+   {
+    console.log("OK! X:"+(n)+",Y:"+(m));
+    if((n-1)>0)
+    {
+      if((this.gameField[n-1][m].value!=10)&&(this.gameField[n-1][m].visible==false))
+         this.clickField(n-1,m);
+    }
+
+    if((n+1)<this.N)
+    {
+      if((this.gameField[n+1][m].value!=10)&&(this.gameField[n+1][m].visible==false))
+         this.clickField(n+1,m);
+    }
+
+    if((m-1)>0)
+    {
+      if((this.gameField[n][m-1].value!=10)&&(this.gameField[n][m-1].visible==false))
+         this.clickField(n,m-1);
+    }
+
+    if((m+1)>this.M)
+    {
+      if((this.gameField[n][m+1].value!=10)&&(this.gameField[n][m+1].visible==false))
+        this.clickField(n,m+1);
+    }
+    
+    this.drawFieldCells();//Redraw Cells
+
+   }
 
 }
 
