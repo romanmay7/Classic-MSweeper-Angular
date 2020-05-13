@@ -27,13 +27,15 @@ export class GameScreenComponent implements OnInit {
       bobmsAmount:number=50;
       fieldVisible:boolean=true
 
+      currentAction:ClickActionType=ClickActionType.OpenCell
+
   constructor() { }
 
   //Listening to Mouse Click events
   @HostListener('window:click', ['$event'])
   clickEvent(event: MouseEvent)
    {
-     //console.log(event);
+     //console.log(event+" ,button: "+event.button);
      //capturing coordinates
      var positionX = event.clientX;
      var positionY = event.clientY;
@@ -217,86 +219,101 @@ export class GameScreenComponent implements OnInit {
           this.ctx.fillStyle = 'lightgrey';
           this.ctx.font = "20px Arial";
           this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
-                   
-          switch(_cell)
-          {
- 
-          case 10: { 
-            //Draw Bomb;
-
-            this.ctx.fillStyle = 'red';
-            //console.log("Drawing bomb at:"+m+","+m);
-            this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
-            break;  
-           
-          } 
-          case 1: { 
-            //Draw Cell with Number "1" Label
-            this.ctx.fillStyle = 'blue';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-            break; 
-          } 
-          case 2: { 
-            //Draw Cell with Number "2" Label
-            this.ctx.fillStyle = 'green';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-           break; 
-          }
-          case 3: { 
-            //Draw Cell with Number "3" Label
-            this.ctx.fillStyle = 'red';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-            break;       
-          } 
-          case 4: { 
-            //Draw Cell with Number "4" Label
-             this.ctx.fillStyle = 'violet';
-             this.ctx.font = "20px Arial";
-             this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-             break;       
-          } 
-          case 5: { 
-             //Draw Cell with Number "5" Label
-             this.ctx.fillStyle = 'maroon';
-             this.ctx.font = "20px Arial";
-             this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-             break;       
-          }
-          case 6: { 
-            //Draw Cell with Number "6" Label
-            this.ctx.fillStyle = 'orange';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-            break;       
-          }
-           case 7: { 
-            //Draw Cell with Number "7" Label
-            this.ctx.fillStyle = 'brown';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-            break;       
-          }
-          case 8: { 
-            //Draw Cell with Number "8" Label
-            this.ctx.fillStyle = 'grey';
-            this.ctx.font = "20px Arial";
-            this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
-            break;       
-          } 
-         }     
+        
+          
+            switch(_cell)
+            {
+   
+            case 10: { 
+              //Draw Bomb;
+  
+              this.ctx.fillStyle = 'red';
+              //console.log("Drawing bomb at:"+m+","+m);
+              this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+              break;  
+             
+            } 
+            case 1: { 
+              //Draw Cell with Number "1" Label
+              this.ctx.fillStyle = 'blue';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+              break; 
+            } 
+            case 2: { 
+              //Draw Cell with Number "2" Label
+              this.ctx.fillStyle = 'green';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+             break; 
+            }
+            case 3: { 
+              //Draw Cell with Number "3" Label
+              this.ctx.fillStyle = 'red';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+              break;       
+            } 
+            case 4: { 
+              //Draw Cell with Number "4" Label
+               this.ctx.fillStyle = 'violet';
+               this.ctx.font = "20px Arial";
+               this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+               break;       
+            } 
+            case 5: { 
+               //Draw Cell with Number "5" Label
+               this.ctx.fillStyle = 'maroon';
+               this.ctx.font = "20px Arial";
+               this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+               break;       
+            }
+            case 6: { 
+              //Draw Cell with Number "6" Label
+              this.ctx.fillStyle = 'orange';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+              break;       
+            }
+             case 7: { 
+              //Draw Cell with Number "7" Label
+              this.ctx.fillStyle = 'brown';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+              break;       
+            }
+            case 8: { 
+              //Draw Cell with Number "8" Label
+              this.ctx.fillStyle = 'grey';
+              this.ctx.font = "20px Arial";
+              this.ctx.fillText(""+this.gameField[n][m].value, (n)*this.Scale+8, (m)*this.Scale+21);
+              break;       
+            } 
+           } 
+    
         }
          
           else
          {  //If Cell is UnVisible
+
+          if(this.gameField[n][m].flagged==true)
+          {
+            //Draw Flag;
+
+            this.ctx.fillStyle = 'yellow';
+            //console.log("Drawing Flag at:"+m+","+m);
+            this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+          }
+          else
+          {
+           
             //Draw Grey Rectangle;
 
             this.ctx.fillStyle = 'grey';
             //console.log("Drawing Unvisible Field at:"+m+","+m);
             this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
            }
+          }
         }
           
       }
@@ -349,52 +366,95 @@ ToggleVisible()
 
 }
 
+ToggleActionType()
+{
+  if(this.currentAction==ClickActionType.MarkCell)
+  {
+    this.currentAction=ClickActionType.OpenCell;
+  }
+  else
+  {
+    this.currentAction=ClickActionType.MarkCell;
+  }
+}
+
 clickField(n:number,m:number)
 {
-  if(this.gameField[n][m].value!=10)
-     this.gameField[n][m].visible=true;
+ if((n>=0 && n<=this.N)&&(m >=-0 && m<=this.M)&& typeof this.gameField[n] != 'undefined'&& typeof this.gameField[n][m] != 'undefined')
+ {
+  if(this.currentAction==ClickActionType.OpenCell)
+  {
+    if(this.gameField[n][m].value!=10)
+       this.gameField[n][m].visible=true;
 
-  //If Player clicks on Bomb
-   if(this.gameField[n][m].value==10)
-   {
-    this.gameField[n][m].visible=true;
-    this.drawFieldCells();//Redraw Cells
-     alert("Game Over! X:"+(n)+",Y:"+(m));
-   }
-   else
-   {
-    console.log("OK! X:"+(n)+",Y:"+(m));
-    if((n-1)>0)
-    {
-      if((this.gameField[n-1][m].value!=10)&&(this.gameField[n-1][m].visible==false))
-         this.clickField(n-1,m);
-    }
+    //If Player clicks on Bomb
+     if(this.gameField[n][m].value==10)
+     {
+       this.gameField[n][m].visible=true;
+       this.drawFieldCells();//Redraw Cells
+        alert("Game Over! X:"+(n)+",Y:"+(m));
+      }
+     else
+     {
+      console.log("OK! X:"+(n)+",Y:"+(m));
+      if((n-1)>0)
+      {
+        if((this.gameField[n-1][m].value!=10)&&(this.gameField[n-1][m].visible==false))
+           this.clickField(n-1,m);
+      }
 
-    if((n+1)<this.N)
-    {
-      if((this.gameField[n+1][m].value!=10)&&(this.gameField[n+1][m].visible==false))
-         this.clickField(n+1,m);
-    }
+      if((n+1)<this.N)
+      {
+        if((this.gameField[n+1][m].value!=10)&&(this.gameField[n+1][m].visible==false))
+           this.clickField(n+1,m);
+      }
 
-    if((m-1)>0)
-    {
-      if((this.gameField[n][m-1].value!=10)&&(this.gameField[n][m-1].visible==false))
-         this.clickField(n,m-1);
-    }
+        if((m-1)>0)
+        {
+          if((this.gameField[n][m-1].value!=10)&&(this.gameField[n][m-1].visible==false))
+             this.clickField(n,m-1);
+        }
 
-    if((m+1)>this.M)
-    {
-      if((this.gameField[n][m+1].value!=10)&&(this.gameField[n][m+1].visible==false))
-        this.clickField(n,m+1);
-    }
+      if((m+1)>this.M)
+      {
+        if((this.gameField[n][m+1].value!=10)&&(this.gameField[n][m+1].visible==false))
+          this.clickField(n,m+1);
+      }
     
-    this.drawFieldCells();//Redraw Cells
+      this.drawFieldCells();//Redraw Cells
+   }
+  }
 
+   else //this.currentAction==ClickActionType.MarkCell
+   {
+     if(!this.gameField[n][m].visible)
+     {
+     if(this.gameField[n][m].flagged)
+     {
+      this.gameField[n][m].flagged=false;
+      
+        //Draw Hidde Grey Cell;
+
+        this.ctx.fillStyle = 'grey';
+        //console.log("Drawing Flag at:"+m+","+m);
+        this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+
+     }
+     else
+     {
+      this.gameField[n][m].flagged=true;
+      
+        //Draw Flag;
+
+        this.ctx.fillStyle = 'yellow';
+        //console.log("Drawing Flag at:"+m+","+m);
+        this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+     }
+    }
    }
 
 }
-
-
+}
 }
 
 export class Cell 
@@ -402,4 +462,9 @@ export class Cell
   flagged:boolean;
   visible:boolean;
   value:number;
+}
+
+export enum ClickActionType {
+  OpenCell = 1,
+  MarkCell,
 }
