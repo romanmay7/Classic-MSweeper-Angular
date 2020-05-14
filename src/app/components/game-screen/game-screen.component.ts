@@ -28,6 +28,7 @@ export class GameScreenComponent implements OnInit {
       fieldVisible:boolean=true
 
       currentAction:ClickActionType=ClickActionType.OpenCell
+      gameOver:boolean=false;
 
   constructor() { }
 
@@ -226,10 +227,15 @@ export class GameScreenComponent implements OnInit {
    
             case 10: { 
               //Draw Bomb;
-  
-              this.ctx.fillStyle = 'red';
               //console.log("Drawing bomb at:"+m+","+m);
-              this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+  
+              this.ctx.beginPath();
+              this.ctx.arc((n*this.Scale+this.Scale/2),(m*this.Scale+this.Scale/2),Math.round(this.Scale*0.5)-3,0*Math.PI,2*Math.PI)
+              //console.log("Drawing("+(n*this.Scale+this.Scale/2)+","+(m*this.Scale+this.Scale/2)+","+ Math.round(this.Scale*0.5) +","+0*Math.PI,","+2*Math.PI)
+              this.ctx.fillStyle = 'black';
+              this.ctx.stroke();
+              this.ctx.fill();
+          
               break;  
              
             } 
@@ -390,8 +396,19 @@ clickField(n:number,m:number)
     //If Player clicks on Bomb
      if(this.gameField[n][m].value==10)
      {
-       this.gameField[n][m].visible=true;
+       this.gameOver=true;
+       this.setAllCellsVisible();
        this.drawFieldCells();//Redraw Cells
+       
+         //highlighting the bomb field and drawing it
+         this.ctx.fillStyle = 'red';
+         this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
+         this.ctx.beginPath();
+         this.ctx.arc((n*this.Scale+this.Scale/2),(m*this.Scale+this.Scale/2),Math.round(this.Scale*0.5)-3,0*Math.PI,2*Math.PI)
+         this.ctx.fillStyle = 'black';
+         this.ctx.stroke();
+         this.ctx.fill();
+
         alert("Game Over! X:"+(n)+",Y:"+(m));
       }
      else
