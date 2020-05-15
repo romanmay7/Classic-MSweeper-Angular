@@ -40,9 +40,13 @@ export class GameScreenComponent implements OnInit {
      //capturing coordinates
      var positionX = event.clientX;
      var positionY = event.clientY;
+     
+     //canvas offsets,relative to display
+     var offsetY=this.canvas.nativeElement.offsetTop;
+     var offsetX=this.canvas.nativeElement.offsetLeft;
 
-     var cellX=Math.round(positionX/this.Scale)-1
-     var cellY=Math.round(positionY/this.Scale)-1
+     var cellX=Math.round((positionX-offsetX)/this.Scale-0.5)
+     var cellY=Math.round((positionY-offsetY)/this.Scale-0.5)
 
      this.clickField(cellX,cellY);
    }
