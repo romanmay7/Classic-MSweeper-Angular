@@ -1,4 +1,5 @@
 import { Component,ViewChild, ElementRef,OnInit,HostListener } from '@angular/core';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-game-screen',
@@ -28,9 +29,15 @@ export class GameScreenComponent implements OnInit {
       fieldVisible:boolean=true
 
       currentAction:ClickActionType=ClickActionType.OpenCell
+
       gameOver:boolean=false;
 
-  constructor() { }
+  constructor(private gameService:GameService)
+  { 
+    gameService.bombsUnMarked=this.bobmsAmount;
+    gameService.flagsLeft=this.bobmsAmount
+
+  }
 
   //Listening to Mouse Click events
   @HostListener('window:click', ['$event'])
@@ -76,9 +83,6 @@ export class GameScreenComponent implements OnInit {
 
     this.drawGameFieldLines();
     this.drawFieldCells();
-
-
-
 
   }
 
@@ -448,34 +452,57 @@ clickField(n:number,m:number)
 
    else //this.currentAction==ClickActionType.MarkCell
    {
-     if(!this.gameField[n][m].visible)
+     if(!this.gameField[n][m].visible)//Only if Unvisible
      {
-     if(this.gameField[n][m].flagged)
+     if(this.gameField[n][m].flagged) //If Marked
      {
       this.gameField[n][m].flagged=false;
       
-        //Draw Hidde Grey Cell;
+        //Draw Hide Grey Cell;
 
         this.ctx.fillStyle = 'grey';
         //console.log("Drawing Flag at:"+m+","+m);
         this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
 
-     }
-     else
-     {
-      this.gameField[n][m].flagged=true;
-      
-        //Draw Flag;
+      if(this.gameService.flagsLeft<this.bobmsAmount)
+      {
+        this.gameService.flagsLeft+=1;
 
-        this.ctx.fillStyle = 'yellow';
-        //console.log("Drawing Flag at:"+m+","+m);
-        this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+        if(this.gameField[n][m].value==10) //If this Field is Bomb
+        {        
+          this.gameService.flagsLeft+=1;
+        }
+      }
+
+     }
+     else  //If Not Marked
+     {
+        if(this.gameService.flagsLeft>0)
+        {
+
+          this.gameField[n][m].flagged=true;
+      
+          //Draw Flag;
+  
+          this.ctx.fillStyle = 'yellow';
+          //console.log("Drawing Flag at:"+m+","+m);
+          this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
+
+          this.gameService.flagsLeft-=1;
+
+          if(this.gameField[n][m].value==10) //If this Field is Bomb
+          {        
+          this.gameService.bombsUnMarked-=1;
+          }
+        }
      }
     }
    }
 
 }
 }
+
+
 }
 
 export class Cell 
