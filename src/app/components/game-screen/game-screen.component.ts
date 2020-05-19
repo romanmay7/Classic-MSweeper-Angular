@@ -312,11 +312,24 @@ export class GameScreenComponent implements OnInit {
 
           if(this.gameField[n][m].flagged==true)
           {
-            //Draw Flag;
 
-            this.ctx.fillStyle = 'yellow';
-            //console.log("Drawing Flag at:"+m+","+m);
-            this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2) 
+          //Draw Flag ***************************************************************
+  
+          this.ctx.fillStyle = 'grey';
+          //console.log("Drawing Flag at:"+m+","+m);
+          this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
+
+          this.ctx.fillStyle = 'black';
+          this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale/10, this.Scale-2)
+
+
+          this.ctx.fillStyle = 'red';
+          this.ctx.beginPath();
+          this.ctx.moveTo((n)*this.Scale,(m)*this.Scale);
+          this.ctx.lineTo((n)*this.Scale+this.Scale/1.5,(m)*this.Scale+this.Scale/2.2);
+          this.ctx.lineTo((n)*this.Scale,(m)*this.Scale+this.Scale/1.5);
+          this.ctx.fill();
+          //****************************************************************************/
           }
           else
           {
@@ -482,12 +495,23 @@ clickField(n:number,m:number)
 
           this.gameField[n][m].flagged=true;
       
-          //Draw Flag;
+          //Draw Flag ***************************************************************
   
-          this.ctx.fillStyle = 'yellow';
+          this.ctx.fillStyle = 'grey';
           //console.log("Drawing Flag at:"+m+","+m);
           this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale-2, this.Scale-2)
 
+          this.ctx.fillStyle = 'black';
+          this.ctx.fillRect((n)*this.Scale, (m)*this.Scale,this.Scale/10, this.Scale-2)
+
+
+          this.ctx.fillStyle = 'red';
+          this.ctx.beginPath();
+          this.ctx.moveTo((n)*this.Scale,(m)*this.Scale);
+          this.ctx.lineTo((n)*this.Scale+this.Scale/1.5,(m)*this.Scale+this.Scale/2.2);
+          this.ctx.lineTo((n)*this.Scale,(m)*this.Scale+this.Scale/1.5);
+          this.ctx.fill();
+          //****************************************************************************/
           this.gameService.flagsLeft-=1;
 
           if(this.gameField[n][m].value==10) //If this Field is Bomb
