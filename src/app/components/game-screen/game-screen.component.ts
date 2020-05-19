@@ -470,7 +470,7 @@ clickField(n:number,m:number)
 
         if(this.gameField[n][m].value==10) //If this Field is Bomb
         {        
-          this.gameService.flagsLeft+=1;
+          this.gameService.bombsUnMarked+=1;
         }
       }
 
