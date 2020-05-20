@@ -16,8 +16,16 @@ export class GameService
     {
        this.interval = setInterval(() => {
          this.timeCounter++;
+         if(this.bombsUnMarked==0)
+          {
+            this.completeGame();
+          }
        },1000)
    
+    }
+
+     stopGame() {
+      clearInterval(this.interval);
     }
 
     convertSecondstoDate(sec:number)
@@ -27,6 +35,12 @@ export class GameService
         return  date.toISOString().substr(11, 8);
     }
    
+    completeGame()
+    {
+      this.stopGame();
+      //todo:Write Logic to send User Data and Completion Time to 'HighScores API'
+      //do it only in the case: his Completion Time is less than longest 'Completion Time' in Top 10 Array
+    }
    
 
 }
