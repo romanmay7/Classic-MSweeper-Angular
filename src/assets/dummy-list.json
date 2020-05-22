@@ -1,0 +1,52 @@
+[
+    {
+      "timeInSeconds":"600",
+      "playerName":"Johnatan Wise",
+      "date":"10/05/2019"
+    },
+     {
+      "timeInSeconds":"550",
+      "playerName":"Johnny Doe",
+      "date":"22/06/2019"
+    },
+     {
+      "timeInSeconds":"400",
+      "playerName":"Samantha Crow",
+      "date":"10/07/2019"
+    },
+     {
+      "timeInSeconds":"350",
+      "playerName":"Deborah Knight",
+      "date":"21/08/2019"
+    },
+     {
+      "timeInSeconds":"300",
+      "playerName":"Paul Gross",
+      "date":"10/08/2019"
+    },
+     {
+      "timeInSeconds":"250",
+      "playerName":"Sharon Deenan",
+      "date":"10/07/2019"
+    },
+     {
+      "timeInSeconds":"200",
+      "playerName":"Sam Lee",
+      "date":"01/12/2019"
+    },
+     {
+      "timeInSeconds":"150",
+      "playerName":"Jason Towers",
+      "date":"16/03/2019"
+    },
+     {
+      "timeInSeconds":"100",
+      "playerName":"Sandra De Rock",
+      "date":"14/02/2019"
+    },
+     {
+      "timeInSeconds":"50",
+      "playerName":"Hillbert Grooney",
+      "date":"18/05/2019"
+    }  
+]

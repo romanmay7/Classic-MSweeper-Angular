@@ -28,14 +28,13 @@ export class GameScreenComponent implements OnInit {
       bobmsAmount:number=50;
       fieldVisible:boolean=true
 
-      currentAction:ClickActionType=ClickActionType.OpenCell
-
-      gameOver:boolean=false;
+      
+      
 
   constructor(private gameService:GameService)
   { 
-    gameService.bombsUnMarked=this.bobmsAmount;
-    gameService.flagsLeft=this.bobmsAmount
+    gameService.bombsAmount=this.bobmsAmount;
+    
 
   }
 
@@ -83,6 +82,7 @@ export class GameScreenComponent implements OnInit {
 
     this.drawGameFieldLines();
     this.drawFieldCells();
+    this.gameService.startNewGame();
 
   }
 
@@ -99,7 +99,7 @@ export class GameScreenComponent implements OnInit {
       {
         this.gameField[n][m]=new Cell();
         this.gameField[n][m].value=0
-        this.gameField[n][m].visible=true
+        this.gameField[n][m].visible=false
 
       }
       
@@ -393,23 +393,13 @@ ToggleVisible()
 
 }
 
-ToggleActionType()
-{
-  if(this.currentAction==ClickActionType.MarkCell)
-  {
-    this.currentAction=ClickActionType.OpenCell;
-  }
-  else
-  {
-    this.currentAction=ClickActionType.MarkCell;
-  }
-}
+
 
 clickField(n:number,m:number)
 {
  if((n>=0 && n<=this.N)&&(m >=-0 && m<=this.M)&& typeof this.gameField[n] != 'undefined'&& typeof this.gameField[n][m] != 'undefined')
  {
-  if(this.currentAction==ClickActionType.OpenCell)
+  if(this.gameService.currentAction==ClickActionType.OpenCell)
   {
     if(this.gameField[n][m].value!=10)
        this.gameField[n][m].visible=true;
@@ -417,7 +407,7 @@ clickField(n:number,m:number)
     //If Player clicks on Bomb
      if(this.gameField[n][m].value==10)
      {
-       this.gameOver=true;
+       
        this.setAllCellsVisible();
        this.drawFieldCells();//Redraw Cells
        
@@ -430,7 +420,7 @@ clickField(n:number,m:number)
          this.ctx.stroke();
          this.ctx.fill();
 
-        alert("Game Over! X:"+(n)+",Y:"+(m));
+         setTimeout(()=>{alert("Game Over!");this.gameService.gameOver();},1000)
       }
      else
      {

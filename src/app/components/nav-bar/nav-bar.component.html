@@ -2,8 +2,9 @@
     <nav
       class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
     >
-      <div class="container">
-        <a class="navbar-brand" [routerLink]="['/']"><img src="../../../assets/smilyseamine.jpg" height="42" width="42" /><b>  Classic MSweeper</b></a>
+      <div class="container" style="float:left">
+        <button type="button" class="btn btn-warning" (click)="gameService.ToggleActionType()">Open\Flag</button>
+        <a class="navbar-brand" style="margin-left:2%;" [routerLink]="['/']"><img src="../../../assets/smilyseamine.jpg" height="42" width="42" /><b>  Classic MSweeper</b></a>
         <h5 style="color:green;">Time: <span style="color:rgb(36, 206, 36);">{{gameService.convertSecondstoDate(gameService.timeCounter)}}</span></h5>
         <span class="tab"></span>
         <h5 style="color:brown;">Left: <span style="color:rgb(92, 35, 35);">{{gameService.flagsLeft}}</span></h5>
