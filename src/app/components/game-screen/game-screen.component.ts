@@ -1,5 +1,6 @@
 import { Component,ViewChild, ElementRef,OnInit,HostListener } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-game-screen',
@@ -31,41 +32,28 @@ export class GameScreenComponent implements OnInit {
       
       
 
-  constructor(private gameService:GameService)
-  { 
-    gameService.bombsAmount=this.bobmsAmount;
-    
-
-  }
-
-  //Listening to Mouse Click events
-  @HostListener('window:click', ['$event'])
-  clickEvent(event: MouseEvent)
-   {
-     //console.log(event+" ,button: "+event.button);
-     //capturing coordinates
-     var positionX = event.clientX;
-     var positionY = event.clientY;
-     
-     //canvas offsets,relative to display
-     var offsetY=this.canvas.nativeElement.offsetTop;
-     var offsetX=this.canvas.nativeElement.offsetLeft;
-
-     var cellX=Math.round((positionX-offsetX)/this.Scale-0.5)
-     var cellY=Math.round((positionY-offsetY)/this.Scale-0.5)
-
-     this.clickField(cellX,cellY);
-   }
-
-
+  constructor(private gameService:GameService,private deviceService: DeviceDetectorService){ } 
 
   ngOnInit()
-  {
-    this.N=32;
-    this.M=24;
-    this.Scale=25;
-    this.fieldWidth=this.Scale*this.N;
-    this.fieldHeight=this.Scale*this.M;
+  {//Initializing Game attributes & dimensions ,depending on Device
+    if(this.deviceService.isDesktop()||this.deviceService.isTablet())
+    {
+      this.N=32;
+      this.M=24;
+      this.Scale=25;
+      this.fieldWidth=this.Scale*this.N;
+      this.fieldHeight=this.Scale*this.M;
+      this.gameService.bombsAmount=this.bobmsAmount;
+    }
+    else if(this.deviceService.isMobile())
+    {
+      this.N=14;
+      this.M=24;
+      this.Scale=25;
+      this.fieldWidth=this.Scale*this.N;
+      this.fieldHeight=this.Scale*this.M;
+      this.gameService.bombsAmount=this.bobmsAmount*0.4;
+    }
 
     this.createGameField();
 
@@ -85,6 +73,26 @@ export class GameScreenComponent implements OnInit {
     this.gameService.startNewGame();
 
   }
+
+    //Listening to Mouse Click events
+    @HostListener('window:click', ['$event'])
+    clickEvent(event: MouseEvent)
+     {
+       //console.log(event+" ,button: "+event.button);
+       //capturing coordinates
+       var positionX = event.clientX;
+       var positionY = event.clientY;
+       
+       //canvas offsets,relative to display
+       var offsetY=this.canvas.nativeElement.offsetTop;
+       var offsetX=this.canvas.nativeElement.offsetLeft;
+  
+       var cellX=Math.round((positionX-offsetX)/this.Scale-0.5)
+       var cellY=Math.round((positionY-offsetY)/this.Scale-0.5)
+  
+       this.clickField(cellX,cellY);
+     }
+  
 
   createGameField()
   {
