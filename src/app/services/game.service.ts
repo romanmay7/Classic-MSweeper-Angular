@@ -17,7 +17,7 @@ export class GameService
     bombsUnMarked:number
     flagsLeft:number
     playerName:string="Anonymous";
-    highscores:GameRecord[]
+    highscores:GameRecord[];
 
     currentAction:ClickActionType=ClickActionType.OpenCell;
 
@@ -91,7 +91,9 @@ export class GameService
     //---------------------------------------------------------------------------------------------------------------------------------
     async loadHighScores()
     {
-      this.highscores = await this.http.get<GameRecord[]>(GlobalVariable.BASE_API_URL+"api/HighScores/GetHighScoresList",).toPromise();
+      var data=await this.http.get<GameRecord[]>(GlobalVariable.BASE_API_URL+"api/HighScores/GetHighScoresList2",).toPromise();
+      this.highscores = Object.values(data);
+      this.highscores.sort((a, b) => (a.timeInSeconds > b.timeInSeconds) ? 1 : -1)
     }
    //---------------------------------------------------------------------------------------------------------------------------------
    //---------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +103,7 @@ export class GameService
     const headers= new HttpHeaders()
     .set('content-type', 'application/json')
     
-    this.http.post<any>(GlobalVariable.BASE_API_URL+"api/HighScores/AddNewRecord", JSON.stringify(record),{ 'headers': headers }).subscribe(data => {
+    this.http.post<any>(GlobalVariable.BASE_API_URL+"api/HighScores/AddNewRecord2", JSON.stringify(record),{ 'headers': headers }).subscribe(data => {
       console.log("Your Record was saved on Server");
 
 

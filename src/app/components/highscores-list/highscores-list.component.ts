@@ -19,10 +19,10 @@ export class HighscoresListComponent implements OnInit {
 
  async ngOnInit() {
 
-  this.loadDummyList(); //For Tests
+  //this.loadDummyList(); //For Tests
 
-   // await this.gameService.loadHighScores();
-  //  this.highscores_list=this.gameService.highscores;
+    await this.gameService.loadHighScores();
+    this.highscores_list=this.gameService.highscores;
   }
 
 
