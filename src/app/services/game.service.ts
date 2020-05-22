@@ -28,6 +28,12 @@ export class GameService
 
     startNewGame()
     {
+      if(typeof this.interval != 'undefined' )
+      {
+        clearInterval(this.interval);//resting timer
+        this.timeCounter = 0;
+      }
+      //------------------------------------------
       this.bombsUnMarked=this.bombsAmount;
       this.flagsLeft=this.bombsAmount;
 
