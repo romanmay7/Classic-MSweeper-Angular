@@ -26,7 +26,7 @@ export class GameScreenComponent implements OnInit {
       fieldHeight:number;
 
       gameField: Cell[][];
-      bobmsAmount:number=50;
+      bobmsAmount:number;
       fieldVisible:boolean=true
 
       
@@ -43,6 +43,7 @@ export class GameScreenComponent implements OnInit {
       this.Scale=25;
       this.fieldWidth=this.Scale*this.N;
       this.fieldHeight=this.Scale*this.M;
+      this.bobmsAmount=80;
       this.gameService.bombsAmount=this.bobmsAmount;
     }
     else if(this.deviceService.isMobile())
@@ -52,7 +53,8 @@ export class GameScreenComponent implements OnInit {
       this.Scale=25;
       this.fieldWidth=this.Scale*this.N;
       this.fieldHeight=this.Scale*this.M;
-      this.gameService.bombsAmount=this.bobmsAmount*0.4;
+      this.bobmsAmount=35;
+      this.gameService.bombsAmount=this.bobmsAmount;
     }
 
     this.createGameField();
